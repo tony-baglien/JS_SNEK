@@ -5,23 +5,21 @@ export default class Snek {
         this.gameHeight = game.gameHeight;
 
 
-        this.height = 25;
-        this.width = 25;
+        this.height = 30;
+        this.width = 30;
         this.reset();
     }
 
     reset(){
         this.currentSpeed = {x: 0, y: 0};
-        this.maxSpeed = 10;
+        this.maxSpeed = 5;
 
-        this.position = {x: 50, y: 50}
+        this.position = {x: 200, y: 50}
+        
     }
     
     draw(ctx) {
-        ctx.strokeRect(this.position.x,
-            this.position.y,
-            this.width,
-            this.height)
+        ctx.strokeRect(this.position.x,this.position.y,this.height,this.width)
     }
 
     moveRight() {
@@ -43,9 +41,9 @@ export default class Snek {
 
 
     update(deltaTime) {
+
         this.position.x += this.currentSpeed.x;
         this.position.y += this.currentSpeed.y;
-
 
         if(this.position.y + this.height < 0)  this.position.y = this.gameHeight
 
@@ -58,6 +56,7 @@ export default class Snek {
         if (this.position.x > this.gameWidth) {
             this.position.x = -this.width
         }
+        
             
         }
     }
