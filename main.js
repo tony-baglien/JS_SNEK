@@ -3,8 +3,8 @@ import GAME from './modules/game.js';
 const canvas = document.getElementById('my-canvas');
 const ctx = canvas.getContext('2d');
 
-const gameHeight = 1000;
-const gameWidth = 1000;
+const gameHeight = 600;
+const gameWidth = 600;
 
 const game = new GAME(gameHeight, gameWidth);
 
@@ -19,7 +19,9 @@ function gameLoop(timestamp) {
   game.draw(ctx);
   game.update(deltaTime);
 
-  requestAnimationFrame(gameLoop);
+  setTimeout(() => {
+    requestAnimationFrame(gameLoop);
+  }, 1000 / 10);
 }
 
 requestAnimationFrame(gameLoop);

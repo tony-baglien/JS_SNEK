@@ -6,47 +6,65 @@ export default class Snek {
 
     this.height = 30;
     this.width = 30;
+
+    this.total = 0;
+    this.tail = [];
+
     this.reset();
   }
 
   reset() {
     this.currentSpeed = { x: 0, y: 0 };
-    this.maxSpeed = 5;
+    this.scale = 30;
+    this.position = { x: 0, y: 0 };
+  }
 
-    this.position = { x: 200, y: 50 };
+  eat() {
+    this.total++;
   }
 
   draw(ctx) {
-    ctx.strokeRect(this.position.x, this.position.y, this.height, this.width);
+    ctx.strokeRect(this.position.x, this.position.y, this.width, this.height);
     ctx.fillStyle = '#ff0000';
     ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+
+    for (let i = 0; i < this.tail.length; i++) {
+      ctx.strokeRect(this.tail[i].x, this.tail[i].y, this.width, this.height);
+    }
   }
 
   moveRight() {
-    this.currentSpeed.x = this.maxSpeed;
+    this.currentSpeed.x = 1;
     this.currentSpeed.y = 0;
   }
   moveLeft() {
-    this.currentSpeed.x = -this.maxSpeed;
+    this.currentSpeed.x = -1;
     this.currentSpeed.y = 0;
   }
   moveUp() {
-    this.currentSpeed.y = -this.maxSpeed;
+    this.currentSpeed.y = -1;
     this.currentSpeed.x = 0;
   }
   moveDown() {
-    this.currentSpeed.y = this.maxSpeed;
+    this.currentSpeed.y = 1;
     this.currentSpeed.x = 0;
-  }
-  stop() {
-    this.currentSpeed.x = 0;
-    this.currentSpeed.y = 0;
   }
 
   update(deltaTime) {
-    this.position.x += this.currentSpeed.x;
-    this.position.y += this.currentSpeed.y;
+    if (this.total === this.tail.length) {
+      for (let i = 0; i < this.tail.length - 1; i++) {
+        this.tail[i] = this.tail[i + 1];
+      }
+    }
+    this.tail[this.total - 1] = {
+      x: this.position.x,
+      y: this.position.y,
+    };
 
+    this.position.x = this.position.x + this.currentSpeed.x * this.scale;
+    this.position.y = this.position.y + this.currentSpeed.y * this.scale;
+
+    //Endless Border Code
     if (this.position.y + this.height < 0) this.position.y = this.gameHeight;
 
     if (this.position.y > this.gameHeight) {

@@ -1,13 +1,12 @@
 export default class Coin {
-  constructor(game, snek, body) {
+  constructor(game, snek) {
     this.game = game;
     this.gameWidth = game.gameWidth;
     this.gameHeight = game.gameHeight;
 
     this.snek = snek;
-    this.body = body;
 
-    this.radius = 10;
+    this.radius = 15;
 
     this.reset();
   }
@@ -15,11 +14,10 @@ export default class Coin {
   randomPosition10() {
     let randomInt = () => {
       return Math.floor(
-        Math.random() * (this.gameHeight / 10 - this.radius / 10 + 1) +
-          this.radius / 10
+        Math.random() * (this.gameHeight - this.radius * 2) + this.radius * 2
       );
     };
-    return randomInt() * 10;
+    return randomInt();
   }
 
   reset() {
@@ -34,14 +32,14 @@ export default class Coin {
 
   update(deltaTime) {
     if (
-      this.position.x > this.snek.position.x &&
       this.position.x < this.snek.position.x + this.snek.width &&
-      this.position.y > this.snek.position.y &&
-      this.position.y < this.snek.position.y + this.snek.height
+      this.position.x + this.radius * 2 > this.snek.position.x &&
+      this.position.y < this.snek.position.y + this.snek.height &&
+      this.position.y + this.radius * 2 > this.snek.position.y
     ) {
       this.position.x = this.randomPosition10();
       this.position.y = this.randomPosition10();
-      this.body.grow();
+      this.snek.eat();
     }
   }
 }
