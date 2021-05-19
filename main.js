@@ -24,4 +24,6 @@ function gameLoop(timestamp) {
   }, 1000 / 10);
 }
 
-requestAnimationFrame(gameLoop);
+let animation = requestAnimationFrame(gameLoop);
+
+export { animation };

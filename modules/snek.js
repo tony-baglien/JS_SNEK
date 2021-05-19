@@ -1,3 +1,5 @@
+import { borderCollision, bodyCollision } from './collision.js';
+
 export default class Snek {
   constructor(game) {
     this.game = game;
@@ -17,10 +19,13 @@ export default class Snek {
     this.currentSpeed = { x: 0, y: 0 };
     this.scale = 30;
     this.position = { x: 0, y: 0 };
+    this.tail = [];
+    this.total = 0;
   }
 
   eat() {
     this.total++;
+    console.log(this.tail);
   }
 
   draw(ctx) {
@@ -64,17 +69,7 @@ export default class Snek {
     this.position.x = this.position.x + this.currentSpeed.x * this.scale;
     this.position.y = this.position.y + this.currentSpeed.y * this.scale;
 
-    //Endless Border Code
-    if (this.position.y + this.height < 0) this.position.y = this.gameHeight;
-
-    if (this.position.y > this.gameHeight) {
-      this.position.y = -this.height;
-    }
-
-    if (this.position.x + this.width < 0) this.position.x = this.gameWidth;
-
-    if (this.position.x > this.gameWidth) {
-      this.position.x = -this.width;
-    }
+    borderCollision(this, this.game);
+    bodyCollision(this, this.game);
   }
 }

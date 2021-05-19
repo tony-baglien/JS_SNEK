@@ -1,5 +1,5 @@
 export default class InputHandler {
-  constructor(snek, body) {
+  constructor(snek, game) {
     document.addEventListener('keydown', (event) => {
       switch (event.keyCode) {
         case 37: {
@@ -19,6 +19,11 @@ export default class InputHandler {
 
         case 40: {
           snek.moveDown();
+          break;
+        }
+
+        case 80: {
+          game.togglePause();
           break;
         }
       }

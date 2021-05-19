@@ -1,3 +1,5 @@
+import { ballCollision } from './collision.js';
+
 export default class Coin {
   constructor(game, snek) {
     this.game = game;
@@ -31,15 +33,6 @@ export default class Coin {
   }
 
   update(deltaTime) {
-    if (
-      this.position.x < this.snek.position.x + this.snek.width &&
-      this.position.x + this.radius * 2 > this.snek.position.x &&
-      this.position.y < this.snek.position.y + this.snek.height &&
-      this.position.y + this.radius * 2 > this.snek.position.y
-    ) {
-      this.position.x = this.randomPosition10();
-      this.position.y = this.randomPosition10();
-      this.snek.eat();
-    }
+    ballCollision(this.snek, this);
   }
 }

@@ -8,7 +8,24 @@
     <title>Snake game</title>
   </head>
   <body>
-    <canvas id="my-canvas" height="600" width="600"></canvas>
+    <div class="game-over hidden">
+      <h1>Game Over</h1>
+      <button id="game-over-button"><a href="#">Try Again, scrub</a></button>
+    </div>
+    <div class="pause-menu hidden">
+      <h1>Paused</h1>
+    </div>
+    <div class="start-menu">
+      <button id="start-button"><a href="#">Start Game</a></button>
+      <button id="options-button"><a href="#">Options</a></button>
+    </div>
+    <canvas
+      id="my-canvas"
+      class="hidden"
+      height="600"
+      width="600"
+      class="hidden"
+    ></canvas>
     <script type="module" src="./main.js"></script>
   </body>
 </html>

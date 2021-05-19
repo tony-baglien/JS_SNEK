@@ -11,3 +11,7 @@ I could not figure out how to make the tail of the snake.
 I used a youtube video to help, though it was not a copy and paste job, so that must count for something right?
 
 https://www.youtube.com/watch?v=AaGK-fj-BAM&t=1264s
+
+#May 19 2021
+
+I added menus for starting, pausing and game over. Honestly the design is terrible, I will refine when I finishe the point system . Please don't jusdge me
