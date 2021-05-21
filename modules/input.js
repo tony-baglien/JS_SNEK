@@ -30,29 +30,3 @@ export default class InputHandler {
     });
   }
 }
-
-//     document.addEventListener('keyup', (event) => {
-//       switch (event.keyCode) {
-//         case 37: {
-//           snek.stop();
-//           break;
-//         }
-
-//         case 39: {
-//           snek.stop();
-//           break;
-//         }
-
-//         case 38: {
-//           snek.stop();
-//           break;
-//         }
-
-//         case 40: {
-//           snek.stop();
-//           break;
-//         }
-//       }
-//     });
-//   }
-// }

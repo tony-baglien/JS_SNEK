@@ -10,22 +10,24 @@
   <body>
     <div class="game-over hidden">
       <h1>Game Over</h1>
-      <button id="game-over-button"><a href="#">Try Again, scrub</a></button>
+      <button id="game-over-button"><a href="#">Try Again</a></button>
     </div>
     <div class="pause-menu hidden">
       <h1>Paused</h1>
     </div>
     <div class="start-menu">
-      <button id="start-button"><a href="#">Start Game</a></button>
-      <button id="options-button"><a href="#">Options</a></button>
+      <div id="clip-background-1"></div>
+      <div id="clip-background-2"></div>
+      <button id="start-button" class="neon-glow">Start</button>
+      <button id="option-button">Options</button>
     </div>
-    <canvas
-      id="my-canvas"
-      class="hidden"
-      height="600"
-      width="600"
-      class="hidden"
-    ></canvas>
+    <div class="game-container">
+      <canvas id="my-canvas" height="600" width="600"> </canvas>
+      <div class="side-menu">
+        <h3>Total Points</h3>
+        <div id="number"></div>
+      </div>
+    </div>
     <script type="module" src="./main.js"></script>
   </body>
 </html>

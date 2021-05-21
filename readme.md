@@ -15,3 +15,9 @@ https://www.youtube.com/watch?v=AaGK-fj-BAM&t=1264s
 #May 19 2021
 
 I added menus for starting, pausing and game over. Honestly the design is terrible, I will refine when I finishe the point system . Please don't jusdge me
+
+#May 21 2021
+
+I Added the point system and finally picked out a pallet to use. There are probably still some bugs and the options menu does not work, yet
+
+For the Game over screen, I want to have it "fall" from the top and bounce on the bottom, causeing the whole middle container to move as it hits.
