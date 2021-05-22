@@ -38,6 +38,7 @@
 }
 canvas {
   border: 1px solid black;
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
 }
 
 .pause-menu,
@@ -49,6 +50,7 @@ canvas {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border-radius: 20px;
 
   position: absolute;
   top: 50%;
@@ -95,7 +97,8 @@ canvas {
 }
 
 #start-button,
-#option-button {
+#option-button,
+#game-over-button {
   z-index: 2;
   height: 10%;
   width: 40%;
@@ -137,7 +140,9 @@ canvas {
 
 .game-over {
   position: absolute;
-  background: #333;
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+  transition: opacity 1s linear;
+  animation: screenShake 3s;
 
   position: absolute;
   top: 50%;
@@ -146,21 +151,19 @@ canvas {
 }
 
 .game-over h1 {
-  animation: blink 2s infinite;
-  color: red;
+  transform: translateY(-600px);
+  color: #f72585;
+
+  animation: fallAndBounce 3s ease-in-out forwards;
 }
 
-.game-over a {
-  text-decoration: none;
-  text-transform: uppercase;
-  font-family: 'Monsterrat';
-  color: #999;
+#game-over-button {
+  width: 80%;
 }
 
 .hidden {
   display: none;
 }
-
 /* animations */
 
 @keyframes blink {
@@ -213,7 +216,18 @@ canvas {
   }
 }
 
-@keyframe appearContainer {
+@keyframes container-appear {
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -100%);
+  }
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* @keyframes appearContainer {
   100% {
     opacity: 0;
     transform: translateY(-25px);
@@ -221,5 +235,44 @@ canvas {
   0% {
     opacity: 1;
     transform: translateY(-50%);
+  }
+} */
+
+@keyframes fallAndBounce {
+  0% {
+    transform: translateY(-300px);
+  }
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  10% {
+    transform: translateY(285px);
+  }
+  20% {
+    transform: translateY(285px);
+  }
+  30% {
+    transform: translateY(0px);
+  }
+
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes screenShake {
+  0%,
+  10%,
+  55%,
+  100% {
+    transform: translate(-50%, -50%);
+  }
+  15% {
+    transform: translate(-50%, -40%);
   }
 }

@@ -30,7 +30,7 @@ export default class Snek {
 
   draw(ctx) {
     ctx.strokeRect(this.position.x, this.position.y, this.width, this.height);
-    ctx.fillStyle = '#ff0000';
+    ctx.fillStyle = '#3A0CA3';
     ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
 
     for (let i = 0; i < this.tail.length; i++) {

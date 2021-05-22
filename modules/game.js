@@ -85,8 +85,13 @@ export default class GAME {
       gameContainer.classList.add('hidden');
 
       tryAgainButton.addEventListener('click', () => {
-        this.gameState = gameState.running;
-        this.reset();
+        tryAgain.style.opacity = 0;
+        setTimeout(() => {
+          tryAgain.style.opacity = 1;
+          gameContainer.style.opacity = 0;
+          this.reset();
+          this.gameState = gameState.running;
+        }, 1500);
       });
     }
     points.innerHTML = this.snek.total;

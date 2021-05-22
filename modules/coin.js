@@ -29,7 +29,8 @@ export default class Coin {
   draw(ctx) {
     ctx.beginPath();
     ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
-    ctx.stroke();
+    ctx.fillStyle = '#4CC9F0';
+    ctx.fill();
   }
 
   update(deltaTime) {
