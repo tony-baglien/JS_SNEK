@@ -1,4 +1,6 @@
 import { ballCollision } from './collision.js';
+import Snek from './snek.js';
+import snek from './snek.js';
 
 export default class Coin {
   constructor(game, snek) {
@@ -29,7 +31,8 @@ export default class Coin {
   draw(ctx) {
     ctx.beginPath();
     ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
-    ctx.fillStyle = '#4CC9F0';
+    ctx.fillStyle = snek.currentColor;
+    ctx.stroke();
     ctx.fill();
   }
 

@@ -13,6 +13,8 @@ export default class Snek {
     this.total = 0;
     this.tail = [];
 
+    this.patterns = [['#FF0000', '#00FF00', '#0000FF']];
+
     this.reset();
   }
 
@@ -23,6 +25,21 @@ export default class Snek {
     this.tail = [];
     this.total = 0;
     this.headColor = headColor;
+    this.paternSelection = 0;
+    this.currentColor = '#fff';
+  }
+
+  patternUpdate() {
+    for (let i = 0; i < this.tail.length; i++) {
+      let pArray = this.patterns[0];
+      if (this.tail.length % 3 === 0) {
+        this.currentColor = pArray[0];
+      } else if (this.tail.length % 2 === 0) {
+        this.currentColor = pArray[1];
+      } else {
+        this.currentColor = pArray[2];
+      }
+    }
   }
 
   eat() {
@@ -36,6 +53,9 @@ export default class Snek {
     ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
 
     for (let i = 0; i < this.tail.length; i++) {
+      this.patternUpdate();
+      ctx.fillStyle = this.currentColor;
+      ctx.fillRect(this.tail[i].x, this.tail[i].y, this.width, this.height);
       ctx.strokeRect(this.tail[i].x, this.tail[i].y, this.width, this.height);
     }
   }
