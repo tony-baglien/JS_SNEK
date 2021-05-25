@@ -8,6 +8,16 @@
     <title>Snake game</title>
   </head>
   <body>
+    <div class="option-menu">
+      <div class="snake-container">
+        <div id="head"></div>
+        <div id="body-1"></div>
+        <div id="body-2"></div>
+        <div id="body-3"></div>
+      </div>
+      <input id="show-picker" />
+      <button id="return-to-start-button">Back to Start</button>
+    </div>
     <div class="game-over hidden">
       <h1>Game Over</h1>
       <button id="game-over-button">Try Again</button>
@@ -28,6 +38,7 @@
         <div id="number"></div>
       </div>
     </div>
+    <script src="./modules/jscolor.js"></script>
     <script type="module" src="./main.js"></script>
   </body>
 </html>

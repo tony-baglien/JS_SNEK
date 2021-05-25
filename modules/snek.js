@@ -1,4 +1,5 @@
 import { borderCollision, bodyCollision } from './collision.js';
+import headColor from './colorPicker.js';
 
 export default class Snek {
   constructor(game) {
@@ -21,6 +22,7 @@ export default class Snek {
     this.position = { x: 0, y: 0 };
     this.tail = [];
     this.total = 0;
+    this.headColor = headColor;
   }
 
   eat() {
@@ -30,7 +32,7 @@ export default class Snek {
 
   draw(ctx) {
     ctx.strokeRect(this.position.x, this.position.y, this.width, this.height);
-    ctx.fillStyle = '#3A0CA3';
+    ctx.fillStyle = this.headColor;
     ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
 
     for (let i = 0; i < this.tail.length; i++) {

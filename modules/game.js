@@ -1,17 +1,21 @@
 import Snek from './snek.js';
 import Coin from './coin.js';
 import InputHandler from './input.js';
+import colorPicker from './colorPicker.js';
 
-const gameState = { start: 0, running: 1, paused: 2, gameOver: 3 };
+const gameState = { start: 0, running: 1, paused: 2, gameOver: 3, options: 4 };
 
 const startMenu = document.querySelector('.start-menu');
 const startButton = document.getElementById('start-button');
 
 const optionsButton = document.getElementById('option-button');
+const optionMenu = document.querySelector('.option-menu');
 const pauseMenu = document.querySelector('.pause-menu');
 
 const tryAgain = document.querySelector('.game-over');
 const tryAgainButton = document.getElementById('game-over-button');
+
+const returnToStartButton = document.querySelector('#return-to-start-button');
 
 const gameContainer = document.querySelector('.game-container');
 const points = document.getElementById('number');
@@ -31,6 +35,8 @@ export default class GAME {
     this.coin = new Coin(this, this.snek);
 
     new InputHandler(this.snek, this);
+
+    this.screenObjects = [startMenu, optionMenu, gameContainer, tryAgain];
   }
 
   draw(ctx) {
@@ -40,33 +46,46 @@ export default class GAME {
 
   update() {
     if (this.gameState === gameState.start) {
-      if (!tryAgain.classList.contains('hidden')) {
-        tryAgain.classList.add('hidden');
-      }
-      gameContainer.classList.add('hidden');
+      this.screenObjects.forEach((screen) => {
+        if (screen !== startMenu) {
+          screen.classList.add('hidden');
+        } else {
+          screen.classList.remove('hidden');
+        }
+      });
       startButton.addEventListener('click', () => {
-        clipBackgroundOne.style.animation = 'from-left .3s linear forwards';
-        clipBackgroundOne.addEventListener('animationend', () => {
-          clipBackgroundTwo.style.animation = 'from-right .3s linear forwards';
-          clipBackgroundTwo.addEventListener('animationend', () => {
-            startButton.style.animation = 'appear .4s ease-in forwards';
-            optionsButton.style.animation = 'appear .4s ease-in forwards';
-            optionsButton.addEventListener('animationend', () => {
-              startMenu.style.opacity = 0;
-              setTimeout(() => (this.gameState = gameState.running), 500);
-            });
-          });
+        startScreenLeaving();
+        setTimeout(() => (this.gameState = gameState.running), 500);
+      });
+      optionsButton.addEventListener('click', () => {
+        startMenu.classList.add('hidden');
+        optionMenu.classList.remove('hidden');
+        this.gameState = gameState.options;
+      });
+    }
+    if (this.gameState === gameState.options) {
+      this.screenObjects.forEach((screen) => {
+        if (screen !== optionMenu) {
+          screen.classList.add('hidden');
+        } else {
+          screen.classList.remove('hidden');
+        }
+        colorPicker.showPicker.show();
+        this.snek.headColor = colorPicker.showPicker.toRGBAString();
+        returnToStartButton.addEventListener('click', () => {
+          colorPicker.showPicker.hide();
+          this.gameState = gameState.start;
         });
       });
     }
-
     if (this.gameState === gameState.running) {
-      if (!tryAgain.classList.contains('hidden')) {
-        tryAgain.classList.add('hidden');
-      }
-      if (!pauseMenu.classList.contains('hidden')) {
-        pauseMenu.classList.add('hidden');
-      }
+      this.screenObjects.forEach((screen) => {
+        if (screen !== gameContainer) {
+          screen.classList.add('hidden');
+        } else {
+          screen.classList.remove('hidden');
+        }
+      });
       isPaused = false;
       gameContainer.classList.remove('hidden');
       startMenu.classList.add('hidden');
@@ -81,8 +100,13 @@ export default class GAME {
       this.coin.update();
     }
     if (this.gameState === gameState.gameOver) {
-      tryAgain.classList.remove('hidden');
-      gameContainer.classList.add('hidden');
+      this.screenObjects.forEach((screen) => {
+        if (screen !== tryAgain) {
+          screen.classList.add('hidden');
+        } else {
+          screen.classList.remove('hidden');
+        }
+      });
 
       tryAgainButton.addEventListener('click', () => {
         tryAgain.style.opacity = 0;
@@ -109,4 +133,18 @@ export default class GAME {
       isPaused = true;
     }
   }
+}
+
+function startScreenLeaving() {
+  clipBackgroundOne.style.animation = 'from-left .3s linear forwards';
+  clipBackgroundOne.addEventListener('animationend', () => {
+    clipBackgroundTwo.style.animation = 'from-right .3s linear forwards';
+    clipBackgroundTwo.addEventListener('animationend', () => {
+      startButton.style.animation = 'appear .4s ease-in forwards';
+      optionsButton.style.animation = 'appear .4s ease-in forwards';
+      optionsButton.addEventListener('animationend', () => {
+        startMenu.style.opacity = 0;
+      });
+    });
+  });
 }
