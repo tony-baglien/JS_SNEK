@@ -2,7 +2,7 @@ const showPicker = new jscolor('#show-picker', { format: 'rgba' });
 
 showPicker.option({
   width: 200,
-  height: 275,
+  height: 200,
   backgroundColor: '#999',
   smartPosition: false,
   position: 'top',

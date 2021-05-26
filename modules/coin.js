@@ -1,5 +1,4 @@
 import { ballCollision } from './collision.js';
-import Snek from './snek.js';
 import snek from './snek.js';
 
 export default class Coin {

@@ -26,6 +26,12 @@ export default class InputHandler {
           game.togglePause();
           break;
         }
+
+        case 81: {
+          game.removeAnimation();
+          game.gameState = 0;
+          break;
+        }
       }
     });
   }

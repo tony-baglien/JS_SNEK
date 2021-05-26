@@ -1,5 +1,4 @@
 import { borderCollision, bodyCollision } from './collision.js';
-import headColor from './colorPicker.js';
 
 export default class Snek {
   constructor(game) {
@@ -13,7 +12,11 @@ export default class Snek {
     this.total = 0;
     this.tail = [];
 
-    this.patterns = [['#FF0000', '#00FF00', '#0000FF']];
+    this.patterns = [
+      ['#FF0000', '#00FF00', '#0000FF'] /*Red Greeen Blue */,
+      ['#ff1b8d', '#ffda00', '#1bb3ff'] /*Pink Yellow Blue */,
+      ['#ff77ff', '#008080', '#800080'] /*fuscia, teal , purple */,
+    ];
 
     this.reset();
   }
@@ -24,14 +27,12 @@ export default class Snek {
     this.position = { x: 0, y: 0 };
     this.tail = [];
     this.total = 0;
-    this.headColor = headColor;
-    this.paternSelection = 0;
-    this.currentColor = '#fff';
+    this.patternSelector = 0;
   }
 
   patternUpdate() {
     for (let i = 0; i < this.tail.length; i++) {
-      let pArray = this.patterns[0];
+      let pArray = this.patterns[this.patternSelector];
       if (this.tail.length % 3 === 0) {
         this.currentColor = pArray[0];
       } else if (this.tail.length % 2 === 0) {

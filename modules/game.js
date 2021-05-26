@@ -3,13 +3,33 @@ import Coin from './coin.js';
 import InputHandler from './input.js';
 import colorPicker from './colorPicker.js';
 
-const gameState = { start: 0, running: 1, paused: 2, gameOver: 3, options: 4 };
+const gameState = {
+  start: 0,
+  running: 1,
+  paused: 2,
+  gameOver: 3,
+  options: 4,
+  color: 5,
+  sound: 6,
+};
 
 const startMenu = document.querySelector('.start-menu');
 const startButton = document.getElementById('start-button');
 
+//Option screen
 const optionsButton = document.getElementById('option-button');
 const optionMenu = document.querySelector('.option-menu');
+
+const colorOptionsButton = document.querySelector('#color-button');
+const colorOptions = document.querySelector('.color-options-container');
+//Patterns
+const patternOne = document.getElementById('pattern-1');
+const patternTwo = document.getElementById('pattern-2');
+const patternThree = document.getElementById('pattern-3');
+
+const soundOptionsButton = document.querySelector('#sound-button');
+//TODO: ADD Sound Menu
+
 const pauseMenu = document.querySelector('.pause-menu');
 
 const tryAgain = document.querySelector('.game-over');
@@ -36,7 +56,22 @@ export default class GAME {
 
     new InputHandler(this.snek, this);
 
-    this.screenObjects = [startMenu, optionMenu, gameContainer, tryAgain];
+    this.screenObjects = [
+      startMenu,
+      optionMenu,
+      pauseMenu,
+      gameContainer,
+      tryAgain,
+      colorOptions,
+    ];
+  }
+
+  removeAnimation() {
+    startMenu.style.opacity = 1;
+    clipBackgroundOne.classList.remove('from-left-animation');
+    clipBackgroundTwo.classList.remove('from-right-animation');
+    startButton.classList.remove('button-appear');
+    optionsButton.classList.remove('button-appear');
   }
 
   draw(ctx) {
@@ -55,7 +90,7 @@ export default class GAME {
       });
       startButton.addEventListener('click', () => {
         startScreenLeaving();
-        setTimeout(() => (this.gameState = gameState.running), 500);
+        setTimeout(() => (this.gameState = gameState.running), 1000);
       });
       optionsButton.addEventListener('click', () => {
         startMenu.classList.add('hidden');
@@ -63,6 +98,7 @@ export default class GAME {
         this.gameState = gameState.options;
       });
     }
+    //Option Screen
     if (this.gameState === gameState.options) {
       this.screenObjects.forEach((screen) => {
         if (screen !== optionMenu) {
@@ -70,14 +106,32 @@ export default class GAME {
         } else {
           screen.classList.remove('hidden');
         }
-        colorPicker.showPicker.show();
-        this.snek.headColor = colorPicker.showPicker.toRGBAString();
+        colorOptionsButton.addEventListener('click', () => {
+          this.gameState = gameState.color;
+        });
         returnToStartButton.addEventListener('click', () => {
           colorPicker.showPicker.hide();
           this.gameState = gameState.start;
         });
       });
     }
+    //Color Picker
+    if (this.gameState === gameState.color) {
+      this.screenObjects.forEach((screen) => {
+        screen !== colorOptions
+          ? screen.classList.add('hidden')
+          : screen.classList.remove('hidden');
+      });
+    }
+    colorPicker.showPicker.show();
+    this.snek.headColor = colorPicker.showPicker.toRGBAString();
+    patternOne.addEventListener('click', () => (this.snek.patternSelector = 1));
+    patternTwo.addEventListener('click', () => (this.snek.patternSelector = 2));
+    patternThree.addEventListener(
+      'click',
+      () => (this.snek.patternSelector = 3)
+    );
+
     if (this.gameState === gameState.running) {
       this.screenObjects.forEach((screen) => {
         if (screen !== gameContainer) {
@@ -87,13 +141,15 @@ export default class GAME {
         }
       });
       isPaused = false;
-      gameContainer.classList.remove('hidden');
-      startMenu.classList.add('hidden');
       setTimeout(() => (gameContainer.style.opacity = 1), 500);
     }
 
     if (this.gameState === gameState.paused) {
-      pauseMenu.classList.remove('hidden');
+      this.screenObjects.forEach((screen) =>
+        screen !== pauseMenu
+          ? screen.classList.add('hidden')
+          : screen.classList.remove('hidden')
+      );
     }
     if (!isPaused) {
       this.snek.update();
@@ -123,6 +179,8 @@ export default class GAME {
   reset() {
     this.snek.reset();
     this.coin.reset();
+    this.snek.patternSelector = 0;
+    colorPicker.showPicker.fromString('#FFF');
   }
   togglePause() {
     if (this.gameState == gameState.paused) {
@@ -136,15 +194,9 @@ export default class GAME {
 }
 
 function startScreenLeaving() {
-  clipBackgroundOne.style.animation = 'from-left .3s linear forwards';
-  clipBackgroundOne.addEventListener('animationend', () => {
-    clipBackgroundTwo.style.animation = 'from-right .3s linear forwards';
-    clipBackgroundTwo.addEventListener('animationend', () => {
-      startButton.style.animation = 'appear .4s ease-in forwards';
-      optionsButton.style.animation = 'appear .4s ease-in forwards';
-      optionsButton.addEventListener('animationend', () => {
-        startMenu.style.opacity = 0;
-      });
-    });
-  });
+  clipBackgroundOne.classList.add('from-left-animation');
+  clipBackgroundTwo.classList.add('from-right-animation');
+  startButton.classList.add('button-appear');
+  optionsButton.classList.add('button-appear');
+  startMenu.style.opacity = 0;
 }

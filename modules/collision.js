@@ -35,7 +35,7 @@ export function bodyCollision(snek, game) {
       snek.tail[i].x === snek.position.x &&
       snek.tail[i].y === snek.position.y
     ) {
-      game.reset();
+      game.gameState = 3;
     }
   }
 }
